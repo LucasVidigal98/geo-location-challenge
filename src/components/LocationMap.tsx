@@ -32,16 +32,16 @@ function LocationMap({
   };
  
   return (
-    <>
+    <div style={{margin: 0}}>
       <Map
-        width={400}
+        width={window.innerWidth < 400 ? 340 : 400}
         height={400}
         defaultCenter={[mapConfig.center[0], mapConfig.center[1]]}
         defaultZoom={mapConfig.zoom}
       >
         {PigeonMarkers}
       </Map>
-    </>
+    </div>
   )
 }
 

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import LocationInfo, { LocationInfoProps } from './components/LocationInfo';
 import LocationMap, { Location } from './components/LocationMap';
@@ -44,7 +43,11 @@ function App() {
       lon: ''
     });
 
-    setLocations([urlLocation as Location]);
+    if(urlLocation){
+      setLocations([urlLocation as Location]);
+    } else {
+      setShowMap(false);
+    }
   }
 
   function updateLocationDetails(data: any){
@@ -63,6 +66,11 @@ function App() {
   async function getUrlLocation() {
     const searchUrl = url;
 
+    if(searchUrl.length === 0) {
+      alert('Please enter a URL');
+      return;
+    }
+
     await api.get(`json/${searchUrl}`).then((response: any) => {
       if (response.data.status !== 'fail') { 
         configMap(response.data, true);
@@ -73,13 +81,15 @@ function App() {
   }
 
   function configMap(loc: Location, url = false) {
-    if (showMap) {
-      setLocations([...locations, loc]);
-    } else {
+    if (showMap && locations.length === 1) {
+      if(!locations.find((location) => location.lat === loc.lat && location.lon === loc.lon)) 
+        setLocations([...locations, loc]);
+    } else if(locations.length < 2) {
       setLocations([loc]);
-      if(url) setUrlLocation(loc);
       setShowMap(true);
     }
+
+    if(url) setUrlLocation(loc);
   }
 
   return (
@@ -90,7 +100,7 @@ function App() {
         <section id="geoLocationContainer" className="">
           <LocationInfo {...locationResponse}/>
 
-          <menu>          
+          <menu className='menuBtns'>          
             <button onClick={getMyLocation} id="btnMyLocation">My location</button>
             <button onClick={resetLocationDetails} id="btnResetLocation">Reset location</button>
 
@@ -98,9 +108,9 @@ function App() {
               <input type="text"  placeholder='URL' onChange={(event) => setUrl(event.target.value)}/>
               <button onClick={getUrlLocation}>Locate</button>
             </div>
-
-            {showMap && <LocationMap locations={locations}/>}
           </menu>
+
+          {showMap && <LocationMap locations={locations}/>}
         </section>
       </section>
     </div>

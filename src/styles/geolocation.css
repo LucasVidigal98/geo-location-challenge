@@ -1,11 +1,15 @@
+.container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
 *{
 	text-align: center;
 	font-size: 20px;
 }
 
-div, button{
-	margin: 0 10px;
-}
 .location_value {
 	color: red;
 }
@@ -18,8 +22,13 @@ div, button{
 	margin-bottom: 10px;
 }
 
+.urlLocaltion button {
+	margin-left: 10px;
+}
+
 #btnMyLocation, #btnResetLocation {
 	width: 300px;
+	margin-left: 10px;
 	height:50;
 }
 
@@ -33,4 +42,35 @@ table > tbody > tr > td.location_value {
 
 table.empty .help {
     visibility: hidden;
+}
+
+@media (max-width: 600px) {
+	.menuBtns {
+		margin: 0px;
+	}
+
+	#btnMyLocation {
+		margin: 0px;
+		margin-top: 10px;
+		margin-left: 0px;
+	}
+
+	#btnResetLocation {
+		margin: 0px;
+		margin-bottom: 10px;
+		margin-top: 10px;
+		margin-left: 0px;
+	}
+
+	.urlLocaltion {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+	}
+
+	.urlLocaltion button {
+		margin-top: 10px;
+		margin-left: 0px;
+	}
 }
