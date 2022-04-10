@@ -13,6 +13,11 @@ div, button{
 	font-size: 48px;
 }
 
+.urlLocaltion {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
 #btnMyLocation, #btnResetLocation {
 	width: 300px;
 	height:50;
